@@ -54,6 +54,12 @@
 </div>
 
 <script type="text/javascript">
+var pi;
+
+//loading digits of Pi thanks to http://www.geom.uiuc.edu/~huberty/math5337/groupe/digits.html
+jQuery.get('pi.txt', function(data) {
+   			 pi = data; 
+			});
 
 window.onload = function () {
 	MIDI.loadPlugin({
@@ -70,8 +76,7 @@ window.onload = function () {
 };
 
 function generator(){
-
-pi = "3.141592653589793238462643383279502884197169399375105820974944592307816406286208998628034825342117067982148086513282306647093844609550582231725359408128481117450284102701938521105559644622948954930381964428810975665933446128475648233 786783165271201909145648566923460348610454326648213393607260249141273724587006";
+			
 			scaleA = [65,68,69,71,72,74,76,77,80,81]; // harmonic scale
 			bpm = parseInt($("#bpm").val());
 			length = parseInt($("#digits").val());
@@ -89,11 +94,10 @@ pi = "3.141592653589793238462643383279502884197169399375105820974944592307816406
 			console.log(note);
 			var velocity = Math.floor(Math.random() * 100) + 40; // how hard the note hits
 
-			addTime = Math.random()+delay;
 
 			MIDI.setVolume(0, 127);
 			MIDI.noteOn(0, note, velocity, delay);
-			MIDI.noteOff(0, note, delay + addTime);
+			MIDI.noteOff(0, note, delay + beat);
 
 			 delay = delay + beat; // play one note every quarter second
 			 		}
